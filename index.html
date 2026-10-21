@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tra cứu thông số</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23107c41'/%3E%3Cpath d='M9 9h14v3H9zm0 5.5h14v3H9zM9 20h9v3H9z' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"></span>
+      <span>Tra cứu thông số</span>
+    </div>
+    <div class="actions">
+      <button id="btnOpenFiles" class="btn primary">Mở file Excel</button>
+      <button id="btnOpenFolder" class="btn">Mở thư mục</button>
+      <button id="btnReopen" class="btn" hidden>Mở lại lần trước</button>
+      <button id="btnSaveAll" class="btn" disabled title="Ctrl+S">Lưu tất cả</button>
+      <span class="sep"></span>
+      <button id="btnHistory" class="btn ghost">Lịch sử sửa</button>
+      <button id="btnBackups" class="btn ghost">Bản sao lưu</button>
+      <button id="btnHelp" class="btn ghost" title="Hướng dẫn">Hướng dẫn</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="side-title">File đang mở <span id="fileCount" class="muted"></span></div>
+      <div id="fileList" class="file-list"></div>
+      <div id="modeNote" class="mode-note"></div>
+    </aside>
+
+    <main class="main">
+      <div class="searchbar">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="q" type="search" autocomplete="off" spellcheck="false"
+                 placeholder="Gõ tên, mã hoặc thông số… (không cần dấu)   phím tắt: /">
+        </div>
+        <select id="fileFilter" title="Lọc theo file"></select>
+        <span id="count" class="muted"></span>
+      </div>
+
+      <div id="empty" class="empty">
+        <div class="drop">
+          <div class="drop-icon" aria-hidden="true"></div>
+          <h2>Kéo thả file Excel vào đây</h2>
+          <p>hoặc bấm <b>Mở file Excel</b> / <b>Mở thư mục</b> ở trên. Có thể mở nhiều file cùng lúc.</p>
+          <p class="muted">File chỉ được xử lý trên máy này, không gửi lên mạng.</p>
+        </div>
+      </div>
+
+      <div id="resultsWrap" class="table-wrap" hidden>
+        <table class="results">
+          <thead>
+            <tr>
+              <th class="ck"><input type="checkbox" id="ckAll" title="Chọn tất cả kết quả đang lọc"></th>
+              <th class="c-code">Mã / Model</th>
+              <th class="c-name">Tên thiết bị</th>
+              <th class="c-spec">Thông số kỹ thuật</th>
+              <th class="c-unit">ĐVT</th>
+              <th class="c-price">Đơn giá</th>
+              <th class="c-src">Nguồn</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="more-wrap"><button id="btnMore" class="btn" hidden>Hiện thêm</button></div>
+      </div>
+    </main>
+
+    <aside id="drawer" class="drawer" hidden></aside>
+  </div>
+
+  <div id="cartbar" class="cartbar" hidden>
+    <div class="cart-info"><b id="cartCount">0</b> sản phẩm đã chọn <span id="cartFiles" class="muted"></span></div>
+    <div class="cart-actions">
+      <button id="btnCartView" class="btn">Xem danh sách</button>
+      <button id="btnCartClear" class="btn ghost">Bỏ chọn hết</button>
+      <button id="btnExport" class="btn primary">Xuất file Excel</button>
+    </div>
+  </div>
+
+  <div id="dropOverlay" class="drop-overlay" hidden><div>Thả file / thư mục để mở</div></div>
+  <dialog id="modal" class="modal"></dialog>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <input type="file" id="fileInput" accept=".xlsx" multiple hidden>
+  <input type="file" id="folderInput" webkitdirectory multiple hidden>
+
+  <script src="vendor/jszip.min.js"></script>
+  <script src="vendor/exceljs.min.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
